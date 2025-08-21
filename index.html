@@ -32,20 +32,32 @@
         }
 
         .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
             margin-top: 100px;
             padding: 20px;
         }
 
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
         .site-button {
-            display: block;
-            width: 200px;
-            margin: 15px auto;
+            flex: 1;
+            min-width: 120px;
+            max-width: 200px;
             padding: 15px;
             background: linear-gradient(135deg, #4CAF50, #45a049);
             color: white;
             text-decoration: none;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             transition: all 0.3s ease;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -64,14 +76,25 @@
         .baidu-button:hover {
             background: linear-gradient(135deg, #1a22b8, #2932e1);
         }
+
+        .bilibili-button {
+            background: linear-gradient(135deg, #FB7299, #FF6699);
+        }
+
+        .bilibili-button:hover {
+            background: linear-gradient(135deg, #FF6699, #FB7299);
+        }
     </style>
 </head>
 <body>
     <header class="site-header">功能网站</header>
     
     <div class="button-container">
-        <a href="https://www.douyin.com" class="site-button" target="_blank">抖音网页版</a>
-        <a href="https://www.baidu.com" class="site-button baidu-button" target="_blank">百度网页版</a>
+        <div class="button-row">
+            <a href="https://www.douyin.com" class="site-button" target="_blank">抖音网页版</a>
+            <a href="https://www.baidu.com" class="site-button baidu-button" target="_blank">百度网页版</a>
+            <a href="https://www.bilibili.com" class="site-button bilibili-button" target="_blank">哔哩哔哩网页版</a>
+        </div>
     </div>
 
     <div style="height: 1000px; padding-top: 20px;">
