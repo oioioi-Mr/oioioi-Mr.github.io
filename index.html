@@ -3,154 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>功能网站</title>
+    <title>功能网站 - 快捷导航</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Microsoft YaHei', sans-serif;
-            /* 炫酷动态渐变背景 */
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            text-align: center;
-            color: #333;
-            min-height: 100vh;
         }
 
-        @keyframes gradient {
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
         .site-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .site-header h1 {
+            color: white;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .site-header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1em;
+        }
+
+        .category {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .category-header {
             display: flex;
-            justify-content: center;
             align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .category-icon {
+            font-size: 2em;
+            margin-right: 15px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
             color: white;
-            font-size: 24px;
+        }
+
+        .category-title {
+            color: white;
+            font-size: 1.8em;
             font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            z-index: 1000;
-        }
-
-        .main-content {
-            padding: 100px 20px 50px;
-        }
-
-        .welcome-text {
-            color: white;
-            font-size: 20px;
-            margin-bottom: 40px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
         }
 
         .site-button {
-            padding: 18px 20px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
-            color: #2c3e50;
-            text-decoration: none;
-            border-radius: 15px;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
-            justify-content: center;
-            min-height: 60px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .site-button:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
-            background: linear-gradient(135deg, rgba(255,255,255,1), rgba(255,255,255,0.95));
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
 
-        /* 抖音按钮样式 */
-        .douyin-button { color: #ff0050; }
-        .douyin-button:hover { color: #ff0050; }
+        .button-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
 
-        /* 百度按钮样式 */
-        .baidu-button { color: #2932e1; }
-        .baidu-button:hover { color: #1a22b8; }
+        .button-content {
+            flex-grow: 1;
+        }
 
-        /* 哔哩哔哩按钮样式 */
-        .bilibili-button { color: #FB7299; }
-        .bilibili-button:hover { color: #FF6699; }
+        .button-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
 
-        /* 快手按钮样式 */
-        .kuaishou-button { color: #FFC300; }
-        .kuaishou-button:hover { color: #FF8C00; }
+        .button-desc {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
 
-        /* GitHub按钮样式 */
-        .github-button { color: #24292e; }
-        .github-button:hover { color: #0366d6; }
-
-        /* QQ按钮样式 */
-        .qq-button { color: #12B7F5; }
-        .qq-button:hover { color: #0099E5; }
-
-        /* 响应式设计：在小屏幕上改为2列 */
+        /* 响应式设计 */
         @media (max-width: 768px) {
-            .button-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* 在更小的屏幕上改为1列 */
-        @media (max-width: 480px) {
             .button-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .site-header h1 {
+                font-size: 2em;
+            }
+            
+            .category-title {
+                font-size: 1.5em;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
         }
     </style>
 </head>
 <body>
-    <header class="site-header">功能网站</header>
-    
-    <div class="main-content">
-        <div class="welcome-text">
-            欢迎访问！精选常用网站导航
-        </div>
-        
-        <div class="button-grid">
-            <!-- 第一行 -->
-            <a href="https://www.douyin.com" class="site-button douyin-button" target="_blank">抖音网页版</a>
-            <a href="https://www.baidu.com" class="site-button baidu-button" target="_blank">百度网页版</a>
-            <a href="https://www.bilibili.com" class="site-button bilibili-button" target="_blank">哔哩哔哩网页版</a>
-            
-            <!-- 第二行 -->
-            <a href="https://www.kuaishou.com" class="site-button kuaishou-button" target="_blank">快手网页版</a>
-            <a href="https://www.github.com" class="site-button github-button" target="_blank">GitHub网页版</a>
-            <a href="https://www.qq.com" class="site-button qq-button" target="_blank">QQ网页版</a>
-        </div>
+    <div class="container">
+        <!-- 网站标题 -->
+        <header class="site-header">
+            <h1>🚀 功能网站导航</h1>
+            <p>精选优质网站，快速访问您需要的服务</p>
+        </header>
+
+        <!-- 短视频分类 -->
+        <section class="category">
+            <div class="category-header">
+                <div class="category-icon">🎬</div>
+                <h2 class="category-title">短视频平台</h2>
+            </div>
+            <div class="button-grid">
+                <a href="https://www.douyin.com" class="site-button" target="_blank">
+                    <div class="button-icon">🎵</div>
+                    <div class="button-content">
+                        <div class="button-title">抖音网页版</div>
+                        <div class="button-desc">发现美好生活</div>
+                    </div>
+                </a>
+                <a href="https://www.kuaishou.com" class="site-button" target="_blank">
+                    <div class="button-icon">⚡</div>
+                    <div class="button-content">
+                        <div class="button-title">快手网页版</div>
+                        <div class="button-desc">拥抱每一种生活</div>
+                    </div>
+                </a>
+                <a href="https://www.bilibili.com" class="site-button" target="_blank">
+                    <div class="button-icon">📺</div>
+                    <div class="button-content">
+                        <div class="button-title">哔哩哔哩</div>
+                        <div class="button-desc">精彩番剧和弹幕</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 搜索工具分类 -->
+        <section class="category">
+            <div class="category-header">
+                <div class="category-icon">🔍</div>
+                <h2 class="category-title">搜索工具</h2>
+            </div>
+            <div class="button-grid">
+                <a href="https://www.baidu.com" class="site-button" target="_blank">
+                    <div class="button-icon">🔎</div>
+                    <div class="button-content">
+                        <div class="button-title">百度搜索</div>
+                        <div class="button-desc">百度一下，你就知道</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 开发工具分类 -->
+        <section class="category">
+            <div class="category-header">
+                <div class="category-icon">💻</div>
+                <h2 class="category-title">开发工具</h2>
+            </div>
+            <div class="button-grid">
+                <a href="https://www.github.com" class="site-button" target="_blank">
+                    <div class="button-icon">🐱</div>
+                    <div class="button-content">
+                        <div class="button-title">GitHub</div>
+                        <div class="button-desc">代码托管平台</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 社交娱乐分类 -->
+        <section class="category">
+            <div class="category-header">
+                <div class="category-icon">💬</div>
+                <h2 class="category-title">社交娱乐</h2>
+            </div>
+            <div class="button-grid">
+                <a href="https://www.qq.com" class="site-button" target="_blank">
+                    <div class="button-icon">🐧</div>
+                    <div class="button-content">
+                        <div class="button-title">QQ网页版</div>
+                        <div class="button-desc">即时通讯服务</div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>© 2025 功能网站导航 - 为您提供便捷的网站访问服务</p>
+        </footer>
     </div>
 
     <script>
-        // 这里可以添加未来的JavaScript功能
+        // 添加一些交互动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.site-button');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
     </script>
 </body>
 </html>
