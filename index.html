@@ -38,7 +38,7 @@
             backdrop-filter: blur(15px);
             border-radius: 20px;
             padding: 25px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
@@ -47,20 +47,50 @@
             color: white;
             font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        .site-header p {
-            color: rgba(255, 255, 255, 0.9);
+        /* 任务栏样式 */
+        .taskbar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .taskbar-button {
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
             font-size: 1.1em;
-            margin-bottom: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .taskbar-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .taskbar-button.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         /* 搜索框样式 */
         .search-container {
             position: relative;
             max-width: 500px;
-            margin: 0 auto;
+            margin: 0 auto 25px;
         }
 
         .search-box {
@@ -83,10 +113,6 @@
             transform: translateY(-2px);
         }
 
-        .search-box::placeholder {
-            color: #999;
-        }
-
         .search-icon {
             position: absolute;
             right: 15px;
@@ -94,62 +120,35 @@
             transform: translateY(-50%);
             color: #667eea;
             font-size: 1.2em;
-            pointer-events: none;
         }
 
-        .search-results {
-            color: white;
-            text-align: center;
-            margin: 10px 0;
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-
-        .category {
+        /* 内容区域 */
+        .content-area {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 30px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            min-height: 400px;
         }
 
-        .category.hidden {
+        .category {
             display: none;
+            animation: fadeIn 0.5s ease;
         }
 
-        .category-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        .category.active {
+            display: block;
         }
 
-        .category-icon {
-            font-size: 2em;
-            margin-right: 15px;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            color: white;
-        }
-
-        .category-title {
-            color: white;
-            font-size: 1.8em;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
 
@@ -211,6 +210,16 @@
 
         /* 响应式设计 */
         @media (max-width: 768px) {
+            .taskbar {
+                gap: 10px;
+            }
+            
+            .taskbar-button {
+                padding: 12px 20px;
+                font-size: 1em;
+                min-width: 100px;
+            }
+            
             .button-grid {
                 grid-template-columns: 1fr;
             }
@@ -218,20 +227,11 @@
             .site-header h1 {
                 font-size: 2em;
             }
-            
-            .category-title {
-                font-size: 1.5em;
-            }
-            
-            .search-box {
-                padding: 12px 45px 12px 15px;
-                font-size: 1em;
-            }
         }
 
         .footer {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 40px;
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.9em;
         }
@@ -239,102 +239,94 @@
 </head>
 <body>
     <div class="container">
-        <!-- 网站标题和搜索 -->
+        <!-- 网站标题 -->
         <header class="site-header">
             <h1>🚀 功能网站导航</h1>
-            <p>精选优质网站，快速访问您需要的服务</p>
             
+            <!-- 搜索框 -->
             <div class="search-container">
                 <input type="text" id="searchInput" class="search-box" placeholder="搜索网站名称或描述...">
                 <div class="search-icon">🔍</div>
             </div>
-            <div class="search-results" id="searchResults">输入关键词开始搜索</div>
+            
+            <!-- 任务栏 -->
+            <div class="taskbar">
+                <button class="taskbar-button active" data-category="all">全部</button>
+                <button class="taskbar-button" data-category="video">视频</button>
+                <button class="taskbar-button" data-category="game">游戏</button>
+                <button class="taskbar-button" data-category="tools">工具</button>
+                <button class="taskbar-button" data-category="social">社交</button>
+            </div>
         </header>
 
-        <!-- 短视频分类 -->
-        <section class="category" data-name="短视频平台">
-            <div class="category-header">
-                <div class="category-icon">🎬</div>
-                <h2 class="category-title">短视频平台</h2>
-            </div>
-            <div class="button-grid">
-                <a href="https://www.douyin.com" class="site-button" data-search="抖音网页版 发现美好生活 短视频">
-                    <div class="button-icon">🎵</div>
-                    <div class="button-content">
-                        <div class="button-title">抖音网页版</div>
-                        <div class="button-desc">发现美好生活</div>
-                    </div>
-                </a>
-                <a href="https://www.kuaishou.com" class="site-button" data-search="快手网页版 拥抱每一种生活 短视频">
-                    <div class="button-icon">⚡</div>
-                    <div class="button-content">
-                        <div class="button-title">快手网页版</div>
-                        <div class="button-desc">拥抱每一种生活</div>
-                    </div>
-                </a>
-                <a href="https://www.bilibili.com" class="site-button" data-search="哔哩哔哩 B站 弹幕 番剧 视频">
-                    <div class="button-icon">📺</div>
-                    <div class="button-content">
-                        <div class="button-title">哔哩哔哩</div>
-                        <div class="button-desc">精彩番剧和弹幕</div>
-                    </div>
-                </a>
-            </div>
-        </section>
+        <!-- 内容区域 -->
+        <div class="content-area">
+            <!-- 全部网站 -->
+            <div class="category active" id="category-all">
+                <div class="button-grid">
+                    <!-- 视频类 -->
+                    <a href="https://www.douyin.com" class="site-button" data-category="video" data-search="抖音网页版 发现美好生活 短视频">
+                        <div class="button-icon">🎵</div>
+                        <div class="button-content">
+                            <div class="button-title">抖音网页版</div>
+                            <div class="button-desc">发现美好生活</div>
+                        </div>
+                    </a>
+                    <a href="https://www.kuaishou.com" class="site-button" data-category="video" data-search="快手网页版 拥抱每一种生活 短视频">
+                        <div class="button-icon">⚡</div>
+                        <div class="button-content">
+                            <div class="button-title">快手网页版</div>
+                            <div class="button-desc">拥抱每一种生活</div>
+                        </div>
+                    </a>
+                    <a href="https://www.bilibili.com" class="site-button" data-category="video" data-search="哔哩哔哩 B站 弹幕 番剧 视频">
+                        <div class="button-icon">📺</div>
+                        <div class="button-content">
+                            <div class="button-title">哔哩哔哩</div>
+                            <div class="button-desc">精彩番剧和弹幕</div>
+                        </div>
+                    </a>
 
-        <!-- 搜索工具分类 -->
-        <section class="category" data-name="搜索工具">
-            <div class="category-header">
-                <div class="category-icon">🔍</div>
-                <h2 class="category-title">搜索工具</h2>
-            </div>
-            <div class="button-grid">
-                <a href="https://www.baidu.com" class="site-button" data-search="百度搜索 百度一下 搜索引擎">
-                    <div class="button-icon">🔎</div>
-                    <div class="button-content">
-                        <div class="button-title">百度搜索</div>
-                        <div class="button-desc">百度一下，你就知道</div>
-                    </div>
-                </a>
-            </div>
-        </section>
+                    <!-- 游戏类 -->
+                    <a href="https://www.mc.js.cool" class="site-button" data-category="game" data-search="MC.JS 我的世界 Minecraft 1.8 服务器">
+                        <div class="button-icon">⚔️</div>
+                        <div class="button-content">
+                            <div class="button-title">MC.JS</div>
+                            <div class="button-desc">一个1.8的我的世界服务器</div>
+                        </div>
+                    </a>
 
-        <!-- 开发工具分类 -->
-        <section class="category" data-name="开发工具">
-            <div class="category-header">
-                <div class="category-icon">💻</div>
-                <h2 class="category-title">开发工具</h2>
-            </div>
-            <div class="button-grid">
-                <a href="https://www.github.com" class="site-button" data-search="GitHub 代码托管 编程 开发">
-                    <div class="button-icon">🐱</div>
-                    <div class="button-content">
-                        <div class="button-title">GitHub</div>
-                        <div class="button-desc">代码托管平台</div>
-                    </div>
-                </a>
-            </div>
-        </section>
+                    <!-- 工具类 -->
+                    <a href="https://www.baidu.com" class="site-button" data-category="tools" data-search="百度搜索 百度一下 搜索引擎">
+                        <div class="button-icon">🔎</div>
+                        <div class="button-content">
+                            <div class="button-title">百度搜索</div>
+                            <div class="button-desc">百度一下，你就知道</div>
+                        </div>
+                    </a>
+                    <a href="https://www.github.com" class="site-button" data-category="tools" data-search="GitHub 代码托管 编程 开发">
+                        <div class="button-icon">🐱</div>
+                        <div class="button-content">
+                            <div class="button-title">GitHub</div>
+                            <div class="button-desc">代码托管平台</div>
+                        </div>
+                    </a>
 
-        <!-- 社交娱乐分类 -->
-        <section class="category" data-name="社交娱乐">
-            <div class="category-header">
-                <div class="category-icon">💬</div>
-                <h2 class="category-title">社交娱乐</h2>
+                    <!-- 社交类 -->
+                    <a href="https://www.qq.com" class="site-button" data-category="social" data-search="QQ网页版 即时通讯 聊天 社交">
+                        <div class="button-icon">🐧</div>
+                        <div class="button-content">
+                            <div class="button-title">QQ网页版</div>
+                            <div class="button-desc">即时通讯服务</div>
+                        </div>
+                    </a>
+                </div>
             </div>
-            <div class="button-grid">
-                <a href="https://www.qq.com" class="site-button" data-search="QQ网页版 即时通讯 聊天 社交">
-                    <div class="button-icon">🐧</div>
-                    <div class="button-content">
-                        <div class="button-title">QQ网页版</div>
-                        <div class="button-desc">即时通讯服务</div>
-                    </div>
-                </a>
-            </div>
-        </section>
 
-        <div id="noResults" class="no-results hidden">
-            没有找到匹配的网站，请尝试其他关键词
+            <!-- 无结果提示 -->
+            <div id="noResults" class="no-results" style="display: none;">
+                没有找到匹配的网站，请尝试其他关键词
+            </div>
         </div>
 
         <footer class="footer">
@@ -343,69 +335,62 @@
     </div>
 
     <script>
-        // 搜索功能实现
         document.addEventListener('DOMContentLoaded', function() {
+            const taskbarButtons = document.querySelectorAll('.taskbar-button');
             const searchInput = document.getElementById('searchInput');
-            const searchResults = document.getElementById('searchResults');
             const noResults = document.getElementById('noResults');
-            const categories = document.querySelectorAll('.category');
-            const buttons = document.querySelectorAll('.site-button');
-            let totalItems = buttons.length;
+            const siteButtons = document.querySelectorAll('.site-button');
+            let currentCategory = 'all';
 
-            // 实时搜索功能
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase().trim();
-                let foundCount = 0;
-                let hasVisibleCategory = false;
-
-                if (searchTerm === '') {
-                    // 显示所有内容
-                    categories.forEach(category => {
-                        category.classList.remove('hidden');
-                        const categoryButtons = category.querySelectorAll('.site-button');
-                        categoryButtons.forEach(button => button.classList.remove('hidden'));
-                    });
-                    noResults.classList.add('hidden');
-                    searchResults.textContent = '输入关键词开始搜索';
-                    return;
-                }
-
-                // 搜索按钮
-                buttons.forEach(button => {
-                    const searchData = button.getAttribute('data-search').toLowerCase();
-                    if (searchData.includes(searchTerm)) {
-                        button.classList.remove('hidden');
-                        foundCount++;
-                    } else {
-                        button.classList.add('hidden');
-                    }
-                });
-
-                // 处理分类显示
-                categories.forEach(category => {
-                    const categoryButtons = category.querySelectorAll('.site-button');
-                    const visibleButtons = category.querySelectorAll('.site-button:not(.hidden)');
+            // 任务栏分类切换
+            taskbarButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
                     
-                    if (visibleButtons.length > 0) {
-                        category.classList.remove('hidden');
-                        hasVisibleCategory = true;
-                    } else {
-                        category.classList.add('hidden');
-                    }
+                    // 更新按钮状态
+                    taskbarButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentCategory = category;
+                    filterContent();
                 });
-
-                // 显示搜索结果
-                if (foundCount > 0) {
-                    searchResults.textContent = `找到 ${foundCount} 个匹配结果`;
-                    noResults.classList.add('hidden');
-                } else {
-                    searchResults.textContent = '';
-                    noResults.classList.remove('hidden');
-                }
             });
 
-            // 添加一些交互动画
-            buttons.forEach(button => {
+            // 搜索功能
+            searchInput.addEventListener('input', function() {
+                filterContent();
+            });
+
+            // 过滤内容
+            function filterContent() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                let visibleCount = 0;
+
+                siteButtons.forEach(button => {
+                    const buttonCategory = button.getAttribute('data-category');
+                    const searchData = button.getAttribute('data-search').toLowerCase();
+                    
+                    const categoryMatch = currentCategory === 'all' || buttonCategory === currentCategory;
+                    const searchMatch = searchTerm === '' || searchData.includes(searchTerm);
+                    
+                    if (categoryMatch && searchMatch) {
+                        button.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        button.style.display = 'none';
+                    }
+                });
+
+                // 显示/隐藏无结果提示
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            }
+
+            // 按钮悬停动画
+            siteButtons.forEach(button => {
                 button.addEventListener('mouseenter', function() {
                     this.style.transform = 'translateY(-5px) scale(1.02)';
                 });
@@ -413,12 +398,408 @@
                     this.style.transform = 'translateY(0) scale(1)';
                 });
             });
+        });
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能网站 - 快捷导航</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-            // 按回车键快速搜索
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    this.blur(); // 移除焦点
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .site-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .site-header h1 {
+            color: white;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        /* 任务栏样式 */
+        .taskbar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .taskbar-button {
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .taskbar-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .taskbar-button.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 搜索框样式 */
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 25px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.2em;
+        }
+
+        /* 内容区域 */
+        .content-area {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-height: 400px;
+        }
+
+        .category {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .category.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .site-button {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .site-button:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .button-content {
+            flex-grow: 1;
+        }
+
+        .button-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .button-desc {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .no-results {
+            text-align: center;
+            color: white;
+            padding: 40px;
+            font-size: 1.1em;
+            opacity: 0.7;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .taskbar {
+                gap: 10px;
+            }
+            
+            .taskbar-button {
+                padding: 12px 20px;
+                font-size: 1em;
+                min-width: 100px;
+            }
+            
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .site-header h1 {
+                font-size: 2em;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 网站标题 -->
+        <header class="site-header">
+            <h1>🚀 功能网站导航</h1>
+            
+            <!-- 搜索框 -->
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-box" placeholder="搜索网站名称或描述...">
+                <div class="search-icon">🔍</div>
+            </div>
+            
+            <!-- 任务栏 -->
+            <div class="taskbar">
+                <button class="taskbar-button active" data-category="all">全部</button>
+                <button class="taskbar-button" data-category="video">视频</button>
+                <button class="taskbar-button" data-category="game">游戏</button>
+                <button class="taskbar-button" data-category="tools">工具</button>
+                <button class="taskbar-button" data-category="social">社交</button>
+            </div>
+        </header>
+
+        <!-- 内容区域 -->
+        <div class="content-area">
+            <!-- 全部网站 -->
+            <div class="category active" id="category-all">
+                <div class="button-grid">
+                    <!-- 视频类 -->
+                    <a href="https://www.douyin.com" class="site-button" data-category="video" data-search="抖音网页版 发现美好生活 短视频">
+                        <div class="button-icon">🎵</div>
+                        <div class="button-content">
+                            <div class="button-title">抖音网页版</div>
+                            <div class="button-desc">发现美好生活</div>
+                        </div>
+                    </a>
+                    <a href="https://www.kuaishou.com" class="site-button" data-category="video" data-search="快手网页版 拥抱每一种生活 短视频">
+                        <div class="button-icon">⚡</div>
+                        <div class="button-content">
+                            <div class="button-title">快手网页版</div>
+                            <div class="button-desc">拥抱每一种生活</div>
+                        </div>
+                    </a>
+                    <a href="https://www.bilibili.com" class="site-button" data-category="video" data-search="哔哩哔哩 B站 弹幕 番剧 视频">
+                        <div class="button-icon">📺</div>
+                        <div class="button-content">
+                            <div class="button-title">哔哩哔哩</div>
+                            <div class="button-desc">精彩番剧和弹幕</div>
+                        </div>
+                    </a>
+
+                    <!-- 游戏类 -->
+                    <a href="https://www.mc.js.cool" class="site-button" data-category="game" data-search="MC.JS 我的世界 Minecraft 1.8 服务器">
+                        <div class="button-icon">⚔️</div>
+                        <div class="button-content">
+                            <div class="button-title">MC.JS</div>
+                            <div class="button-desc">一个1.8的我的世界服务器</div>
+                        </div>
+                    </a>
+
+                    <!-- 工具类 -->
+                    <a href="https://www.baidu.com" class="site-button" data-category="tools" data-search="百度搜索 百度一下 搜索引擎">
+                        <div class="button-icon">🔎</div>
+                        <div class="button-content">
+                            <div class="button-title">百度搜索</div>
+                            <div class="button-desc">百度一下，你就知道</div>
+                        </div>
+                    </a>
+                    <a href="https://www.github.com" class="site-button" data-category="tools" data-search="GitHub 代码托管 编程 开发">
+                        <div class="button-icon">🐱</div>
+                        <div class="button-content">
+                            <div class="button-title">GitHub</div>
+                            <div class="button-desc">代码托管平台</div>
+                        </div>
+                    </a>
+
+                    <!-- 社交类 -->
+                    <a href="https://www.qq.com" class="site-button" data-category="social" data-search="QQ网页版 即时通讯 聊天 社交">
+                        <div class="button-icon">🐧</div>
+                        <div class="button-content">
+                            <div class="button-title">QQ网页版</div>
+                            <div class="button-desc">即时通讯服务</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 无结果提示 -->
+            <div id="noResults" class="no-results" style="display: none;">
+                没有找到匹配的网站，请尝试其他关键词
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>© 2025 功能网站导航 - 为您提供便捷的网站访问服务</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const taskbarButtons = document.querySelectorAll('.taskbar-button');
+            const searchInput = document.getElementById('searchInput');
+            const noResults = document.getElementById('noResults');
+            const siteButtons = document.querySelectorAll('.site-button');
+            let currentCategory = 'all';
+
+            // 任务栏分类切换
+            taskbarButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // 更新按钮状态
+                    taskbarButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    currentCategory = category;
+                    filterContent();
+                });
+            });
+
+            // 搜索功能
+            searchInput.addEventListener('input', function() {
+                filterContent();
+            });
+
+            // 过滤内容
+            function filterContent() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                let visibleCount = 0;
+
+                siteButtons.forEach(button => {
+                    const buttonCategory = button.getAttribute('data-category');
+                    const searchData = button.getAttribute('data-search').toLowerCase();
+                    
+                    const categoryMatch = currentCategory === 'all' || buttonCategory === currentCategory;
+                    const searchMatch = searchTerm === '' || searchData.includes(searchTerm);
+                    
+                    if (categoryMatch && searchMatch) {
+                        button.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        button.style.display = 'none';
+                    }
+                });
+
+                // 显示/隐藏无结果提示
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
                 }
+            }
+
+            // 按钮悬停动画
+            siteButtons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
             });
         });
     </script>
